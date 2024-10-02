@@ -12,7 +12,7 @@ Add functionality for the incomplete data structure functions.
 
 Modify this README document with a paragraph (at least three complete sentences) explaining why the different storage methods are better for the different lists used in the driver.
 # EXPLANATION GOES UNDER HERE 
-
+Array storage is more efficient when you need a fixed-length list, while linked lists can expand as much as your memory allows. Arrays also offer faster access with a time complexity of O(1) for retrieving an element by index. In contrast, linked lists have a time complexity of O(n) for the same operation because you must traverse the nodes sequentially using a loop. Since nodes in a linked list can only be accessed by starting from the head, this time complexity applies to most operations within the class. For this project, linked lists make better to-do lists because it is simpler to insert an item at a non-end position compared to array storage. 
 ## Submission details
 If you are usinng git from the command line, execute the following commands:
 1.	After accepting the assignment invitation, copy the clone URL
