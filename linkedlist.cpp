@@ -1,3 +1,7 @@
+// Author: Connor James
+// Assignment: Homework 2
+// File: Definitions of declartions for link list implentation
+
 template<class ItemType>
 Node<ItemType>* LinkedList<ItemType>::getNodeAt(int position) const{
 	// enforce precondition
@@ -17,7 +21,11 @@ LinkedList<ItemType>::LinkedList() : headPtr(nullptr), itemCount(0){}
 
 template<class ItemType>
 LinkedList<ItemType>::LinkedList(const LinkedList<ItemType>& aList){
-    cout << "implement me!" << endl; //remove this and add the correct code
+	itemCount = aList.itemCount;
+	for(int i = itemCount; i > 0; i--){ // going backwards, add each node to the beginning of our new list
+		ItemType temp = aList.getNodeAt(i)->getItem(); // make a temp copy of the item stored in the original node
+		insert(1, temp);
+	}
 }
 
 template<class ItemType>
@@ -32,10 +40,22 @@ int LinkedList<ItemType>::getLength() const{
 
 template<class ItemType>
 bool LinkedList<ItemType>::insert(int newPosition, const ItemType& newEntry){
-    cout << "implement me!" << endl; //remove this and add the correct code
-
-    return false;
+ 	bool ableToInsert = (newPosition >= 1) && (newPosition <= itemCount + 1);
+	if(ableToInsert){
+		Node<ItemType>* newPtr = new Node<ItemType>(newEntry);
+		if(newPosition == 1){ 
+			newPtr->setNext(headPtr); 
+			headPtr = newPtr; 
+		}else{
+			Node<ItemType>* prevPtr = getNodeAt(newPosition - 1);
+			newPtr->setNext(prevPtr->getNext());
+			prevPtr->setNext(newPtr); 
+		}
+		itemCount++;
+	}
+    return ableToInsert;
 }
+
 
 template<class ItemType>
 bool LinkedList<ItemType>::remove(int position){
@@ -66,14 +86,22 @@ bool LinkedList<ItemType>::remove(int position){
 
 template<class ItemType>
 void LinkedList<ItemType>::clear(){
-    cout << "implement me!" << endl; //remove this and add the correct code
+	for(int i = itemCount; i > 0; i--){ // remove from end to beginning
+		remove(i);
+	}
+
 }
 
 template<class ItemType>
 ItemType LinkedList<ItemType>::getEntry(int position) const {
-    cout << "implement me!" << endl; //remove this and add the correct code
-    ItemType temp;
-    return temp;
+    bool ableToGet = (position >= 1) && (position <= itemCount);
+	if(ableToGet){
+		Node<ItemType>* nodePtr = getNodeAt(position);
+    	ItemType temp;
+		temp = nodePtr->getItem();
+    	return temp;
+	}
+	throw "item not found";
 } 
 
 template<class ItemType>

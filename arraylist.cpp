@@ -1,16 +1,22 @@
+// Author: Connor James
+// Assignment: Homework 2
+// File: Definitions for declarations for storage of lists 
+
 template<class ItemType>
 ArrayList<ItemType>::ArrayList() : maxCount(DEFAULT_CAPACITY), itemCount(0){}
 
 template<class ItemType>
 ArrayList<ItemType>::ArrayList(const ArrayList<ItemType>& aList){
-	cout << "implement me!" << endl; //remove this and add the correct code
+		itemCount = aList.itemCount;
+	maxCount = aList.maxCount;
+	for(int i = 0; i < itemCount; i++){ 
+		items[i] = aList.items[i];
+	}
 }
 
 template<class ItemType>
 bool ArrayList<ItemType>::isEmpty() const{
-	cout << "implement me!" << endl; //remove this and add the correct code
-
-	return false;
+return (itemCount == 0);
 }
 
 template<class ItemType>
@@ -35,9 +41,14 @@ bool ArrayList<ItemType>::insert(int newPosition, const ItemType& newEntry){
 
 template<class ItemType>
 bool ArrayList<ItemType>::remove(int position){
-	cout << "implement me!" << endl; //remove this and add the correct code
-
-    	return false;
+	bool ableToRemove = (position >= 1) && (position <= itemCount);
+	if(ableToRemove){
+		for(int i = position; i < itemCount-1; i++){ 
+			items[i] = items[i+1];
+		}
+		itemCount--; 
+	}
+    return ableToRemove;
 }
 
 template<class ItemType>
@@ -57,7 +68,11 @@ ItemType ArrayList<ItemType>::getEntry(int position) const {
 
 template<class ItemType>
 ItemType ArrayList<ItemType>::replace(int position, const ItemType& newEntry){
-    	cout << "implement me!" << endl; //remove this and add the correct code
-    	ItemType temp;
-    	return temp;
+    	bool ableToReplace = (position <= 1) && (position <= itemCount);
+    	if(ableToReplace){
+			ItemType temp = items[position];
+			items[position] = newEntry; 
+			return temp; 
+		}
+		throw "Item not found";
 }
