@@ -1,0 +1,29 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: make test (if fails, remove .o and executable from repo)
+      id: make-test-if-fails-remove-o-and-executable-from-repo
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: make test (if fails, remove .o and executable from repo)
+        setup-command: ''
+        command: make
+        timeout: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        MAKE-TEST-IF-FAILS-REMOVE-O-AND-EXECUTABLE-FROM-REPO_RESULTS: "${{steps.make-test-if-fails-remove-o-and-executable-from-repo.outputs.result}}"
+      with:
+        runners: make-test-if-fails-remove-o-and-executable-from-repo
